@@ -33,8 +33,7 @@ if __name__ == "__main__":
     devices_list = helpers.get_device_list()
 
     threads = list()
-    # for index in range(len(devices_list)):
-    for index in range(5):
+    for index in range(len(devices_list)):
         # Splits the device properties: 0 is Device ID, 1 is Device OS, 2 is Status, 3 is Device Name, 4 is Device UDID
         device_property = devices_list[index].split('|')
         # Checks if device is in Available state first
