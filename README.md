@@ -18,7 +18,7 @@ The purpose of this script is to help and minimize the effort for Cloud Admins b
 
 The Device Tags are reflected in the UI when looking at the Devices Page:
 
-![img.png](images/img.png)
+![img.png](images/device_tags.png)
 
 ### Flow
 
@@ -26,7 +26,7 @@ This is the flow of the script and what it does when triggered:
 
 - Get list of all devices from SeeTest Cloud
 - Get the state of devices
-    - If device is Online & Device is iOS (_Not supported for Android yet_) - Trigger Appium Script which does the following steps:
+    - If device is Online - Trigger Appium Script which does the following steps:
       - Reserve Device
       - Launch Device Settings
       - Check which WiFi Device is connected to
@@ -50,7 +50,7 @@ wifi_name=UKCustomers_ALL
 ```
 
 The script will trigger the Appium Sessions in parallel based using multi-threading concept.
-If there are 50 iOS Devices in Available state, there will be 50 sessions being triggered at once.
+If there are 50 Devices in Available state, there will be 50 sessions being triggered at once.
 
 ### How to set up the environment
 

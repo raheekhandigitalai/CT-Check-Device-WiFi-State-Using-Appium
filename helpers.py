@@ -158,6 +158,10 @@ def find_elements(driver, xpath):
     return items
 
 
+def click_on_element(driver, xpath):
+    driver.find_element(By.XPATH, xpath).click()
+
+
 # Re-usable method to click on element if found, else swipe and click
 def click_element_else_swipe_and_click(driver, xpath, start_offset):
     try:

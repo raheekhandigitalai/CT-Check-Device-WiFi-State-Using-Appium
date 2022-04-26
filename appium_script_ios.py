@@ -13,19 +13,11 @@ from selenium.webdriver import DesiredCapabilities
 config = configparser.ConfigParser()
 config.read('config.properties')
 
-# Pre-defining the iPhone capabilities as script is designed for iOS only for now
+# Pre-defining the Android Capabilities as this Class is designed for iOS only
 capabilities = DesiredCapabilities.IPHONE
 
 
-class CheckDeviceWiFiState(unittest.TestCase):
-    # # Android currently not supported. If Device is Android, exit the script before it starts
-    # if operating_system == 'Android':
-    #     logger('Python Script (logger) - operating_system is android, not yet supported: %s' % operating_system)
-    #     sys.exit()
-    #
-    # # if iOS - Do nothing, continue test as usual
-    # elif operating_system == 'iOS':
-    #     logger('Python Script (logger) - operating_system is ios, continuing: %s' % operating_system)
+class CheckDeviceWiFiStateiOS(unittest.TestCase):
 
     def setUp(self, udid):
         # Capabilities for the session
@@ -40,7 +32,7 @@ class CheckDeviceWiFiState(unittest.TestCase):
         self.driver = webdriver.Remote(desired_capabilities=capabilities,
                                        command_executor=helpers.get_cloud_url() + helpers.get_wd_hub())
 
-    def test_wifi_connection_dummy(self):
+    def test_wifi_connection(self):
         # Storing device Serial Number to variable
         device_udid = self.driver.capabilities['udid']
 
@@ -75,4 +67,4 @@ class CheckDeviceWiFiState(unittest.TestCase):
 
 # Helps run the test using unittest framework
 runner = unittest.TextTestRunner()
-suite = unittest.TestLoader().loadTestsFromTestCase(CheckDeviceWiFiState)
+suite = unittest.TestLoader().loadTestsFromTestCase(CheckDeviceWiFiStateiOS)

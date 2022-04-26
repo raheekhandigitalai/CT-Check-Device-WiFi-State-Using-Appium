@@ -1,24 +1,46 @@
 import logging
 import threading
-import appium_script
+import appium_script_ios
+import appium_script_android
 import helpers
 
 
-def start_appium_script(name, device_udid):
+def start_appium_script_ios(name, device_udid):
     logging.info("Thread %s: starting", name)
     # Instantiating the Appium Script Class
-    appium_methods = appium_script.CheckDeviceWiFiState()
+    appium_session_ios = appium_script_ios.CheckDeviceWiFiStateiOS()
 
     try:
         # Setting up Appium Session using Device ID
-        appium_methods.setUp(device_udid)
+        appium_session_ios.setUp(device_udid)
         # Running the Appium Script itself
-        appium_methods.test_wifi_connection_dummy()
+        appium_session_ios.test_wifi_connection()
         # Tearing down the Appium Session once done
-        appium_methods.tearDown()
+        appium_session_ios.tearDown()
     except Exception as e:
         # If Script fails for some reason, making sure Appium Session still ends and doesn't leave sessions hanging
-        appium_methods.tearDown()
+        appium_session_ios.tearDown()
+        raise Exception(e)
+
+    logging.info("Thread %s: finishing", name)
+
+
+# Not yet tested
+def start_appium_script_android(name, device_udid):
+    logging.info("Thread %s: starting", name)
+    # Instantiating the Appium Script Class
+    appium_session_android = appium_script_android.CheckDeviceWiFiStateAndroid()
+
+    try:
+        # Setting up Appium Session using Device ID
+        appium_session_android.setUp(device_udid)
+        # Running the Appium Script itself
+        appium_session_android.test_wifi_connection()
+        # Tearing down the Appium Session once done
+        appium_session_android.tearDown()
+    except Exception as e:
+        # If Script fails for some reason, making sure Appium Session still ends and doesn't leave sessions hanging
+        appium_session_android.tearDown()
         raise Exception(e)
 
     logging.info("Thread %s: finishing", name)
@@ -41,9 +63,14 @@ if __name__ == "__main__":
             # If device OS is iOS, only then run (As script is only developed for iOS now)
             if 'iOS' in device_property[1]:
                 logging.info("Main    : create and start thread %d.", index)
-                x = threading.Thread(target=start_appium_script, args=(index, device_property[4].strip()))
+                x = threading.Thread(target=start_appium_script_ios, args=(index, device_property[4].strip()))
                 threads.append(x)
                 x.start()
+            # elif 'Android' in device_property[1]:
+            #     logging.info("Main    : create and start thread %d.", index)
+            #     x = threading.Thread(target=start_appium_script_android, args=(index, device_property[4].strip()))
+            #     threads.append(x)
+            #     x.start()
 
     for index, thread in enumerate(threads):
         logging.info("Main    : before joining thread %d.", index)

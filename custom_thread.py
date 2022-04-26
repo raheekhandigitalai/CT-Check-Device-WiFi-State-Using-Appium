@@ -1,6 +1,6 @@
 from threading import Thread
 import time
-import appium_script
+import appium_script_ios
 
 # Not using this class. Purely experimental for understanding Multi Threading better.
 class CustomThread:
