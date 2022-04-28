@@ -40,10 +40,10 @@ class CheckDeviceWiFiStateiOS(unittest.TestCase):
         device_id = helpers.get_device_property(device_udid, 'id')
 
         # Wait for element to be present before interacting
-        helpers.wait_for_element_to_be_present(self.driver, Locators.wifi_xpath)
+        helpers.wait_for_element_to_be_present(self.driver, Locators.ios_wifi_xpath)
 
         # Storing Wi-Fi Connection in text format
-        wifi_label = helpers.get_text_from_element(self.driver, Locators.wifi_xpath)
+        wifi_label = helpers.get_text_from_element(self.driver, Locators.ios_wifi_xpath)
         logger(wifi_label)
 
         # Check if the desired Wi-Fi name is present in the connected Wi-Fi

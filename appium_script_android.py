@@ -26,8 +26,6 @@ class CheckDeviceWiFiStateAndroid(unittest.TestCase):
         capabilities['udid'] = '%s' % udid
         capabilities['platformName'] = 'Android'
         capabilities['generateReport'] = False  # Disable report creation, will help to reduce execution time
-        # capabilities['appPackage'] = 'com.android.settings'
-        # capabilities['appActivity'] = '.homepage.SettingsHomepageActivity'
 
         self.driver = webdriver.Remote(desired_capabilities=capabilities,
                                        command_executor=helpers.get_cloud_url() + helpers.get_wd_hub())
@@ -56,28 +54,30 @@ class CheckDeviceWiFiStateAndroid(unittest.TestCase):
 
         # If device is not a Samsung device, end script. Only supporting Samsung to begin with
         if 'samsung' not in device_manufacturer:
-            logger('Device manufacturer is : %s' % device_manufacturer)
-            logger('Currently only supporting Samsung. Exiting script.')
+            logger('Device manufacturer is : %s . Currently only supporting Samsung. Exiting Script.' % device_manufacturer)
             self.tearDown()
             sys.exit()
 
-        # If Device OS is 6, the UI looks different, exit test
-        if '6' in device_os_version:
+        # If Device OS is 5, the UI logic is different, exit test (Not yet implemented)
+        if '5' in device_os_version:
+            logger('Device OS Version is Android 5. Only supporting Android 8 and above. Exiting Script.')
+            self.tearDown()
+            sys.exit()
+        # If Device OS is 6, the UI logic is different, exit test (Not yet implemented)
+        elif '6' in device_os_version:
             logger('Device OS Version is Android 6. Only supporting Android 8 and above. Exiting Script.')
             self.tearDown()
             sys.exit()
-        # If Device OS is 7, the UI looks different, exit test
+        # If Device OS is 7, the UI logic is different, exit test (Not yet implemented)
         elif '7' in device_os_version:
             logger('Device OS Version is Android 7. Only supporting Android 8 and above. Exiting Script.')
             self.tearDown()
             sys.exit()
         # Script will work on Android 8, but Settings App has different Activity Name. Launch accordingly
         elif '8' in device_os_version:
-            logger('8')
             self.driver.execute_script("seetest:client.launch(\"com.android.settings/.Settings\", \"false\", \"true\")")
         # Script will work on Android 9, but Settings App has different Activity Name. Launch accordingly
         elif '9' in device_os_version:
-            logger('9')
             self.driver.execute_script("seetest:client.launch(\"com.android.settings/.Settings\", \"false\", \"true\")")
         # Script will work on Android 10 and above, but Settings App has different Activity Name. Launch accordingly
         else:

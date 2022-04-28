@@ -25,7 +25,6 @@ def start_appium_script_ios(name, device_udid):
     logging.info("Thread %s: finishing", name)
 
 
-# Not yet tested
 def start_appium_script_android(name, device_udid):
     logging.info("Thread %s: starting", name)
     # Instantiating the Appium Script Class
@@ -60,17 +59,16 @@ if __name__ == "__main__":
         device_property = devices_list[index].split('|')
         # Checks if device is in Available state first
         if 'Available' in devices_list[index]:
-            # If device OS is iOS, only then run (As script is only developed for iOS now)
             if 'iOS' in device_property[1]:
                 logging.info("Main    : create and start thread %d.", index)
                 x = threading.Thread(target=start_appium_script_ios, args=(index, device_property[4].strip()))
                 threads.append(x)
                 x.start()
-            # elif 'Android' in device_property[1]:
-            #     logging.info("Main    : create and start thread %d.", index)
-            #     x = threading.Thread(target=start_appium_script_android, args=(index, device_property[4].strip()))
-            #     threads.append(x)
-            #     x.start()
+            elif 'Android' in device_property[1]:
+                logging.info("Main    : create and start thread %d.", index)
+                x = threading.Thread(target=start_appium_script_android, args=(index, device_property[4].strip()))
+                threads.append(x)
+                x.start()
 
     for index, thread in enumerate(threads):
         logging.info("Main    : before joining thread %d.", index)
